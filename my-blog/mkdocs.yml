@@ -1,0 +1,17 @@
+site_name: My study notes
+theme:
+  name: material
+  language: zh  # 设置为中文
+  features:
+    - navigation.tabs  # 开启顶部选项卡
+    - search.suggest   # 搜索建议
+    - search.highlight # 搜索关键词高亮
+  palette:
+    primary: indigo    # 主题颜色
+
+markdown_extensions:
+  - pymdownx.arithmatex: # 数学公式支持
+      generic: true
+  - pymdownx.highlight:  # 代码高亮支持
+      anchor_linenums: true
+  - pymdownx.superfences # 支持嵌套代码块
