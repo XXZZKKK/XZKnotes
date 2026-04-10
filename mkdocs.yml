@@ -15,3 +15,9 @@ markdown_extensions:
   - pymdownx.highlight:  # 代码高亮支持
       anchor_linenums: true
   - pymdownx.superfences # 支持嵌套代码块
+
+nav:
+  - Home: index.md
+  - Notes:
+      - Note 1: notes/note1.md
+      - Note 2: notes/note2.md
