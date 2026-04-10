@@ -1,0 +1,9 @@
+{
+    "markdown.copyFiles.destination": {
+        "**/*": "${documentWorkspaceFolder}/docs/images/img.png"
+    },
+    // 关键：强制使用相对路径（即生成 ../images/xxx.png）
+    "markdown.copyFiles.referenceStyle": "relative",
+    // 关键：如果文件名冲突，自动增加后缀（防止覆盖）
+    "markdown.copyFiles.overwriteBehavior": "nameIncrementally"
+}
