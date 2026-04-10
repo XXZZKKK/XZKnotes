@@ -1,4 +1,5 @@
 site_name: My study notes
+site_url: https://xxzzkkk.github.io/XZKnote/
 theme:
   name: material
   language: zh  # 设置为中文
