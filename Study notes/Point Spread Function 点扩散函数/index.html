@@ -69,6 +69,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -370,6 +375,36 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        理论解析
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        从信号处理视角来看
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -387,16 +422,31 @@
 
   <h1>Point Spread Function 点扩散函数</h1>
 
-<p>想象在极度黑暗的宇宙中，有一颗无限小、无限亮的星星（一个理想的点光源）。
-当你用任何光学仪器（无论是人眼、显微镜还是高倍天文望远镜）去观察这颗星星时，
-由于光波的物理特性和镜片的限制，你在视野或传感器上看到的绝对不会是一个无限小的点，
-而是一个有一定面积、边缘模糊的光斑。简单来说：点扩散函数（PSF）就是用来描述一个“完
-美的点”在经过光学系统后，是如何“扩散”成一个“模糊的斑”的数学函数。 它是衡量一个光学系统
-“视力”好坏的指纹。系统的PSF越集中，成像就越清晰；PSF越弥散，成像就越模糊。二、 核心光学术语释义（理论前置）为了更顺畅地进入严谨的理论部分，我们需要先对齐以下几个关键术语：点光源 (Point Source): 物理维度无穷小，向四周均匀发光的光源（数学上常表示为狄拉克 <span class="arithmatex">\(\delta\)</span> 函数）。衍射 (Diffraction): 光在传播过程中遇到障碍物或小孔（如相机的光圈）时，偏离直线传播，发生弯曲和散开的现象。这是光作为电磁波的本质属性。孔径 (Aperture): 光学系统中允许光线通过的有效开口大小（如镜头的通光口径）。艾里斑 (Airy Disk): </p>
-<div class="arithmatex">\[E = mc^2\]</div>
-<div class="arithmatex">\[\sum_{i=0}^{n}x_i\]</div>
-<p>即使是一个没有任何制造瑕疵的完美透镜，由于衍射的限制，点光源的成像也会是一个中心最亮、周围环绕着明暗相间同心圆环的衍射图样。这个中心最亮的亮斑就叫艾里斑。像差 (Aberration): 实际光学系统由于材料、形状或工艺缺陷，导致光线无法完美汇聚在一点的现象（如球面像差、色差、彗差等）。像差会使实际的 PSF 变得不对称或进一步扩大。卷积 (Convolution): 一种数学运算。在光学中，它表示将输入（真实的场景）与系统的特性（PSF）叠加，从而得到输出（最终的图像）。</p>
-<p><img alt="alt text" src="../../images/img-2.png" /></p>
+<p>显微镜中所观察的一个分子，一般数学上被定义为点光源，用狄拉克函数表示，显微镜包含多个透镜与孔隙，点光源发出的光线会发生像差、衍射、折射等行为，从而最终观察到的是一个模糊的光斑，而点扩散函数就是用来描述一个“完美的点”在经过光学系统后，是如何“扩散”成一个“模糊的斑”的数学函数，系统的PSF越集中，成像越清晰；PSF越弥散，成像越模糊。</p>
+<div class="arithmatex">\[PSF = 成像系统对一个点输入的响应\]</div>
+<h4 id="_1">理论解析</h4>
+<p>任何复杂场景，都可以看作是由无数个强度不同的“点光源”组成的集合，同时光学系统通常被近似为线性非时变系统（可线性叠加，满足空间平移不变，以及输入一定延迟，输出作相同延迟，波形不变）。传感器捕获到的二维图像 <span class="arithmatex">\(I(x,y)\)</span>，实际上是理想的三维场景在二维投影上的真实分布 <span class="arithmatex">\(O(x,y)\)</span> 与该系统的点扩散函数 <span class="arithmatex">\(\text{PSF}(x,y)\)</span> 的卷积，并叠加了系统噪声 <span class="arithmatex">\(N(x,y)\)</span>：</p>
+<div class="arithmatex">\[I(x,y) = O(x,y) * \text{PSF}(x,y) + N(x,y)\]</div>
+<p>所以如果能精确推导系统的PSF，就能通过去卷积算法，从观测图像中逆向反推，重建精确的原始场景<span class="arithmatex">\(O(x,y)\)</span></p>
+<p>什么，为什么是卷积呢？重新给我自己回顾一下卷积的意义。</p>
+<div class="arithmatex">\[y(t)=\int_{-\infty}^{+\infty}x(τ)h(t−\tau)d\tau\]</div>
+<p><span class="arithmatex">\(t\)</span>：我想看的输出的位置
+<span class="arithmatex">\(\tau\)</span>：输入x位置一个个扫过去的遍历变量
+<span class="arithmatex">\(x(\tau)\)</span>：输入在<span class="arithmatex">\(\tau\)</span>位置的强度
+<span class="arithmatex">\(h(t-\tau)\)</span>：<span class="arithmatex">\(\tau\)</span>位置，对输出位置<span class="arithmatex">\(t\)</span>所产生的响应</p>
+<p>对于某个<span class="arithmatex">\(t\)</span>位置上的响应，等于所有位置上的响应乘以这些位置相对于<span class="arithmatex">\(t\)</span>的响应后求和，换句话说就是加权求和。我好像写着写着终于理解了<img alt="😄" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f604.svg" title=":smile:" /></p>
+<p>相当于物体上每一个亮点，都会在图像上盖一个PSF模板的印章，重复在这张纸上把所有点的章全盖一遍，最终会得到所有模板的叠加，即为最终图像<span class="arithmatex">\(I(x,y)\)</span></p>
+<h4 id="_2">从信号处理视角来看</h4>
+<p>卷积核是空间域滤波器，其傅里叶变换是OTF(optical transfer function)，OTF模长是MTF(modulation transfer function)</p>
+<div class="arithmatex">\[\text{OTF}(f_x, f_y) = \mathcal{F}\{\text{PSF}(x,y)\}=MTF(f_x, f_y)\cdot e^{jPTF(f_x, f_y)}\]</div>
+<div class="arithmatex">\[\text{MTF}(f_x, f_y) = |\mathcal{F}\{\text{PSF}(x,y)\}|\]</div>
+<div class="arithmatex">\[\mathcal{F}\{I\}=\mathcal{F}\{O\}\mathcal{F}\{PSF\}\]</div>
+<p>如果PSF很弥散，高频细节的点发出的光会相互混合，导致信息丢失。理论而言，空间域和频域之间存在一个缩放特性，如果一个函数在空间域被拉宽（扩展），那么它的傅里叶变换在频域中必然被压缩（收缩）：</p>
+<div class="arithmatex">\[\mathcal{F}\{f(a x)\} = \frac{1}{|a|} F\left(\frac{f_x}{a}\right)\]</div>
+<p>MTF下降，即对比度的下降，则会导致最终图像无法分辨高频细节。</p>
+<blockquote>
+<p>高频细节：高频图像中亮度剧烈、快速变化的区域。比如锐利的边缘、细密的毛发、粗糙材料表面的微小纹理</p>
+</blockquote>
 
 
 
