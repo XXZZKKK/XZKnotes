@@ -28,6 +28,6 @@ extra_javascript:
 nav:
   - Home: index.md
   - Notes:
-      - Note 1: notes/note1.md
+      - Note 1: Study notes/Point Spread Function 点扩散函数.md
 
 
