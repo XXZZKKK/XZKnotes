@@ -16,6 +16,9 @@ markdown_extensions:
   - pymdownx.highlight:  # 代码高亮支持
       anchor_linenums: true
   - pymdownx.superfences # 支持嵌套代码块
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 extra_javascript:
   - javascripts/mathjax.js
